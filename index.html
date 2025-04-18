@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>TikTok Profile Clone (Mobile)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset & base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
+
+    /* Wrapper to center on larger screens */
+    .wrapper {
+      max-width: 420px;
+      margin: 0 auto;
+      background: #fff;
+      min-height: 100vh;
+      position: relative;
+      padding-bottom: 60px; /* footer height */
+    }
+
+    /* Sticky header */
+    .profile-header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    .profile-header h1 { font-size: 18px; display: inline-block; vertical-align: middle; font-weight: 600; }
+    .profile-header .dot { display: inline-block; width: 8px; height: 8px; background: #f00; border-radius: 50%; margin-left: 4px; vertical-align: middle; }
+    .profile-header .icons { position: absolute; right: 12px; top: 12px; font-size: 18px; }
+    .profile-header .icons i { margin-left: 16px; cursor: pointer; }
+
+    /* Content wrapper */
+    .content { padding: 0 12px; }
+
+    /* Avatar & name */
+    .avatar-wrapper {
+      position: relative;
+      margin-top: 12px;
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    .avatar-wrapper .avatar {
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+    }
+    /* Story add icon: centered below avatar */
+    .avatar-wrapper .add {
+      position: absolute;
+      bottom: 75px;
+      left: 58%;
+      transform: translateX(-50%);
+      background: #00bfff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      border: 2px solid #fff;
+      cursor: pointer;
+    }
+    .avatar-wrapper .username { margin-top: 12px; font-size: 16px; font-weight: 600; color: #000; }
+    .avatar-wrapper small { display: block; font-size: 14px; color: #666; margin-top: 2px; }
+    .avatar-wrapper .subtitle { font-size: 12px; color: #666; margin-top: 4px; }
+
+    /* Stats row */
+    .stats { display: flex; justify-content: center; gap: 30px; padding: 10px 0; }
+    .stats .item { text-align: center; flex: none; }
+    .stats .item .num { font-weight: bold; font-size: 16px; color: #000; }
+    .stats .item .label { font-size: 12px; color: #666; margin-top: 2px; }
+
+   /* actions buttons  */
+    .actions { display: flex; justify-content: center; gap: 6px; padding: 12px 0; }
+    .actions button { flex: 1; margin: 0; padding: 10px 0; border: none; border-radius: 6px; background: #f2f2f2; font-size: 14px; cursor: pointer;  }
+    .actions .add-friend { position: relative; width: 40px;  }
+     .badge { position: absolute; top: 4px; right: 37px; background:#ff385c; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    /* Tab menu */
+    .menu-tabs { display: flex; justify-content: space-around; padding: 10px 0; font-size: 20px; color: #666; border-bottom: 1px solid #eee; }
+    .menu-tabs i { cursor: pointer; }
+
+    /* Videos carousel */
+    .videos { display: flex;  padding: 6px 0; }
+    .videos video { width: 130px; height: 185px; object-fit: cover; margin-right: 6px;  flex-shrink: 0; }
+
+    /* Sticky footer nav */
+    .footer-nav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 6px 0; border-top: 1px solid #eee; background: #fff; font-size: 12px; z-index: 100; }
+    .footer-nav .nav-item { text-align: center; color: #666; flex: 1; cursor: pointer; }
+    .footer-nav .nav-item i { font-size: 20px; display: block; }
+    .footer-nav .nav-item img { width: 45px; height: 32px; margin-left: -5px; }
+
+    /* Popup menu overlay */
+    .popup-menu { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top-left-radius: 16px; border-top-right-radius: 16px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 16px; display: none; z-index: 200; }
+    .popup-menu ul { list-style: none; }
+    .popup-menu li { padding: 12px 8px; border-bottom: 1px solid #eee; display: flex; align-items: center; font-size: 16px; cursor: pointer; }
+    .popup-menu li i { margin-right: 10px; width: 20px; text-align: center; }
+    .popup-menu li:hover { background: #f9f9f9; }
+    .popup-menu .balance { margin-left: auto; font-weight: bold; color: #555; }
+
+    /* action 1 */
+    .action1 { padding: 12px 0; text-align: center; font-size: 14px; color: #666; }
+    .action1 .subtitle { font-size: 14px; color: #111111; margin-top: 4px; font-weight: 600;}
+    .action1 .paragraph{ margin-top: 5px;}
+    
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="profile-header">
+      <h1>Ali Seikh <span class="dot"></span></h1>
+      <div class="icons">
+        <i class="far fa-calendar"></i>
+        <i class="fas fa-bars" id="menuToggle"></i>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="avatar-wrapper">
+        <img src="alisekh.jpg" alt="Avatar" class="avatar">
+        <div class="add"><i class="fas fa-plus"></i></div>
+        <div class="username">@princedubai029</div>
+        
+      </div>
+
+      <div class="stats">
+        <div class="item"><div class="num">44</div><div class="label">Following</div></div>
+        <div class="item"><div class="num">6.8K</div><div class="label">Followers</div></div>
+        <div class="item"><div class="num">251</div><div class="label">Likes</div></div>
+      </div>
+
+      <div class="actions">
+        <button>Edit profile</button>
+        <button>Share profile</button>
+        <button class="add-friend"><i class="fas fa-user-plus"></i><span class="badge">2</span></button>
+      </div>
+
+      <div class="action1">
+        <div class="subtitle">Back to Main Id (@aliseikh20)</div>
+        <div class="paragraph">
+          <p >                                  
+            <i class="fas fa-user-plus " style="color: #ff385c;"></i> <strong>Tik Tok Studio</strong> | <img src="star1.png" alt="TikTok" style="width: 20px; height: 20px; vertical-align: middle;"></i> <strong> Subscription</strong> 
+          </p>
+        </div>
+      </div>
+
+      <nav class="menu-tabs">
+        <i class="fas fa-th-large"></i>
+        <i class="fas fa-lock"></i>
+        <i class="fas fa-retweet"></i>
+        <i class="fas fa-comment-slash"></i>
+        <i class="fas fa-heart"></i>
+      </nav>
+
+      <section class="videos">
+        <video src="video.mp4" controls muted></video>
+        <video src="video.mp4" controls muted></video>
+        <video src="video.mp4" controls muted></video>
+      </section>
+    </div>
+
+    <footer class="footer-nav" id="footerNav">
+      <div class="nav-item"><i class="fas fa-home"></i>Home</div>
+      <div class="nav-item"><i class="fas fa-user-friends"></i>Friends</div>
+      <div class="nav-item"><img src="create.jpg" alt="Plus"></div>
+      <div class="nav-item"><i class="fas fa-inbox"></i>Inbox</div>
+      <div class="nav-item"><i class="fas fa-user"></i>Profile</div>
+    </footer>
+
+    <div id="popupMenu" class="popup-menu">
+      <ul>
+        <li onclick="goToStudio()"><i class="fas fa-video"></i> TikTok Studio</li>
+        <li onclick="goToBalance()"><i class="fas fa-wallet"></i> Balance <span class="balance">USD 118.977</span></li>
+        <li onclick="goToMusic()"><i class="fas fa-music"></i> My Music</li>
+        <li onclick="goToQRCode()"><i class="fas fa-qrcode"></i> My QR code</li>
+        <li onclick="goToSettings()"><i class="fas fa-cog"></i> Settings & privacy</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const popupMenu = document.getElementById('popupMenu');
+    const footerNav = document.getElementById('footerNav');
+
+    menuToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = popupMenu.style.display === 'block';
+      popupMenu.style.display = open ? 'none' : 'block';
+      footerNav.style.display = open ? 'flex' : 'none';
+    });
+
+    document.addEventListener('click', e => {
+      if (!popupMenu.contains(e.target) && e.target.id !== 'menuToggle') {
+        popupMenu.style.display = 'none';
+        footerNav.style.display = 'flex';
+      }
+    });
+
+    function goToStudio() { alert('Navigating to TikTok Studio...'); }
+    function goToBalance() { window.location.href = 'balance.html'; }
+    function goToMusic() { alert('Opening My Music...'); }
+    function goToQRCode() { alert('Displaying QR Code...'); }
+    function goToSettings() { alert('Opening Settings & privacy...'); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction Details</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-pVkGfQnLU1MMFqtcGgW9cO4O+7+Z3WwMuo69lej61Z9cfMdDXxDfiLgdClzI1DA+cA3kQ2O5x1dX7+0TJTIZxg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f5f5f7; color: #111; }
+    .header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: center; padding: 16px; background: #fff; box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
+    .header .back, .header .edit { position: absolute; font-size: 20px; color: #111; cursor: pointer; }
+    .header .back { left: 16px; }
+    .header .edit { right: 16px; }
+    .header .title { font-size: 18px; font-weight: 600; }
+    .container { padding: 16px; }
+    .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .center { text-align: center; }
+    .card .small-text { font-size: 14px; color: #888; }
+    .rewards-amount { font-size: 24px; font-weight: 600; margin: 4px 0; }
+    .diamond-count { display: inline-flex; align-items: center; font-weight: 500; color: #555; }
+    .diamond-count i { margin-left: 4px; color: #f0b90b; }
+    .list-item { display: flex; justify-content: space-between; font-size: 14px; color: #555; padding: 8px 0; }
+    .divider { height: 1px; background: #eee; margin: 8px 0; }
+    .status-row, .info-row, .link-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
+    .info-label { font-size: 14px; color: #888; }
+    .info-value { font-size: 14px; color: #111; }
+    .link-row a { font-size: 14px; color: #111; text-decoration: none; display: inline-flex; align-items: center; }
+    .link-row a i { margin-left: 4px; }
+    button.copy-btn { background: none; border: none; cursor: pointer; color: #888; margin-left: 8px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="withdraw.html"><i class="fas fa-arrow-left back"></i></a>
+    <div class="title">Transaction Details</div>
+    <i class="fas fa-pen edit"></i>
+  </header>
+
+  <div class="container">
+    <!-- Rewards Card -->
+    <div class="card center">
+      <div class="small-text">LIVE rewards</div>
+      <div class="rewards-amount" id="withdrawAmountDisplay">+USD0.00</div>
+      <div class="diamond-count">Diamonds <i class="fas fa-gem"></i> 2878</div>
+      <div class="divider"></div>
+      <div class="list-item">
+        <span>LIVE Gift rewards</span>
+        <span class="diamond-count"><i class="fas fa-gem"></i> 1744</span>
+      </div>
+      <div class="list-item">
+        <span>Multi-guest extra rewards <i class="fas fa-info-circle" style="color:#888;"></i></span>
+        <span class="diamond-count"><i class="fas fa-gem"></i> 1134</span>
+      </div>
+    </div>
+
+    <!-- Transaction Info Card -->
+    <div class="card">
+      <!-- Display Username -->
+      <div class="info-row">
+        <span class="info-label">Username</span>
+        <span class="info-value" id="usernameDisplay">-</span>
+      </div>
+      <div class="divider"></div>
+
+      <div class="status-row">
+        <span class="info-label">Status</span>
+        <span class="info-value"><i class="fas fa-check-circle" style="color: #34C759;"></i> Completed</span>
+      </div>
+      <div class="divider"></div>
+      <div class="info-row">
+        <span class="info-label">Date and time</span>
+        <span class="info-value">4/5/2025 1:27:34 AM</span>
+      </div>
+      <div class="divider"></div>
+      <div class="info-row" style="align-items:center;">
+        <span class="info-label">Transaction ID</span>
+        <div style="display:flex; align-items:center;">
+          <span class="info-value">7475635692870648854-74895372<br>77035662102</span>
+          <button class="copy-btn"><i class="fas fa-copy"></i></button>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="link-row">
+        <a href="#">LIVE details <i class="fas fa-chevron-right"></i></a>
+      </div>
+      <div class="divider"></div>
+      <div class="link-row">
+        <a href="#">Reward rule <i class="fas fa-chevron-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Retrieve and display username & passed amount -->
+  <script>
+    // Username
+    const storedUser = localStorage.getItem('username');
+    if (storedUser) {
+      document.getElementById('usernameDisplay').textContent = storedUser;
+      localStorage.removeItem('username');
+    }
+    // Withdrawal Amount
+    const stored = localStorage.getItem('withdrawAmount');
+    if (stored !== null) {
+      const amt = parseFloat(stored).toFixed(2);
+      document.getElementById('withdrawAmountDisplay').textContent = `+USD${amt}`;
+      localStorage.removeItem('withdrawAmount');
+    }
+  </script>
+</body>
+</html>

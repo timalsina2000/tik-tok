@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Transaction Details</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-pVkGfQnLU1MMFqtcGgW9cO4O+7+Z3WwMuo69lej61Z9cfMdDXxDfiLgdClzI1DA+cA3kQ2O5x1dX7+0TJTIZxg=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
+
+  <!-- FontAwesome for icons -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -18,31 +13,102 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
+
   <style>
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f5f5f7; color: #111; }
-    .header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: center; padding: 16px; background: #fff; box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
-    .header .back, .header .edit { position: absolute; font-size: 20px; color: #111; cursor: pointer; }
+    /* ---- Reset & Base ---- */
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #fff;
+      color: #111;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ---- Header ---- */
+    .header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    .header .back, .header .edit {
+      position: absolute;
+      font-size: 20px;
+      color: #111;
+      cursor: pointer;
+    }
     .header .back { left: 16px; }
     .header .edit { right: 16px; }
-    .header .title { font-size: 18px; font-weight: 600; }
-    .container { padding: 16px; }
-    .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .center { text-align: center; }
-    .card .small-text { font-size: 14px; color: #888; }
-    .rewards-amount { font-size: 24px; font-weight: 600; margin: 4px 0; }
-    .diamond-count { display: inline-flex; align-items: center; font-weight: 500; color: #555; }
-    .diamond-count i { margin-left: 4px; color: #f0b90b; }
-    .list-item { display: flex; justify-content: space-between; font-size: 14px; color: #555; padding: 8px 0; }
-    .divider { height: 1px; background: #eee; margin: 8px 0; }
-    .status-row, .info-row, .link-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
-    .info-label { font-size: 14px; color: #888; }
-    .info-value { font-size: 14px; color: #111; }
-    .link-row a { font-size: 14px; color: #111; text-decoration: none; display: inline-flex; align-items: center; }
-    .link-row a i { margin-left: 4px; }
-    button.copy-btn { background: none; border: none; cursor: pointer; color: #888; margin-left: 8px; }
+    .header .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* ---- Container ---- */
+    .container {
+      padding: 0 16px;
+    }
+
+    /* ---- Centered top section ---- */
+    .top-summary {
+      text-align: center;
+      padding: 24px 0;
+    }
+    .top-summary .small-text {
+      font-size: 16px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .top-summary .amount {
+      font-size: 32px;
+      font-weight: 700;
+      color: #111;
+      margin: 8px 0;
+    }
+
+    /* ---- Info rows ---- */
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      
+      font-size: 14px;
+      color: #555;
+    }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      color: #888;
+    }
+    .info-value {
+      color: #111;
+      display: inline-flex;
+      align-items: center;
+    }
+    .info-value i {
+      margin-right: 6px;
+    }
+
+    /* ---- Copy button ---- */
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+      margin-left: 8px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
+
   <header class="header">
     <a href="liveRewards.html"><i class="fas fa-arrow-left back"></i></a>
     <div class="title">Transaction Details</div>
@@ -50,91 +116,99 @@
   </header>
 
   <div class="container">
-    <!-- Rewards Card -->
-    <div class="card center">
-      <div class="small-text">LIVE rewards</div>
-      <div class="rewards-amount" id="withdrawAmountDisplay">+USD0.00</div>
-      <div class="diamond-count">Diamonds <i class="fas fa-gem"></i> 2878</div>
-      <div class="divider"></div>
-      <div class="list-item">
-        <span>LIVE Gift rewards</span>
-        <span class="diamond-count"><i class="fas fa-gem"></i> 1744</span>
-      </div>
-      <div class="list-item">
-        <span>Multi-guest extra rewards <i class="fas fa-info-circle" style="color:#888;"></i></span>
-        <span class="diamond-count"><i class="fas fa-gem"></i> 1134</span>
-      </div>
+    <!-- top summary -->
+    <div class="top-summary">
+      <div class="small-text">LIVE rewards withdrawal to PayPal</div>
+      <div class="amount" id="withdrawAmountDisplay">+USD0.00</div>
     </div>
 
-    <!-- Transaction Info Card -->
-    <div class="card">
-      <!-- Display Username -->
-      <div class="info-row">
-        <span class="info-label">Username</span>
-        <span class="info-value" id="usernameDisplay">-</span>
-      </div>
-      <div class="divider"></div>
+    <!-- Status -->
+    <div class="info-row">
+      <span class="info-label">Status</span>
+      <span class="info-value">
+        <i class="fas fa-check-circle" style="color: #34C759;"></i>
+        Withdrawal complete
+      </span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Username</span>
+      <span class="info-value" id="usernameDisplay"></span>
+    </div>
 
-      <div class="status-row">
-        <span class="info-label">Status</span>
-        <span class="info-value"><i class="fas fa-check-circle" style="color: #34C759;"></i> Completed</span>
-      </div>
-      <div class="divider"></div>
-      <div class="info-row">
-        <span class="info-label">Withdrawal time</span>
-        <span class="info-value" id="withdrawTimeDisplay"></span>
-      </div>
-      <div class="divider"></div>
-      <div class="info-row">
-        <span class="info-label">Arival time</span>
-        <span class="info-value" > within 24 hr</span>
-      </div>
-      <div class="divider"></div>
-      <div class="info-row" style="align-items:center;">
-        <span class="info-label">Transaction ID</span>
-        <div style="display:flex; align-items:center;">
-          <span class="info-value">7475635692870648854-74895372<br>77035662102</span>
-          <button class="copy-btn"><i class="fas fa-copy"></i></button>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="link-row">
-        <a href="#">LIVE details <i class="fas fa-chevron-right"></i></a>
-      </div>
-      <div class="divider"></div>
-      <div class="link-row">
-        <a href="#">Reward rule <i class="fas fa-chevron-right"></i></a>
-      </div>
+    <!-- Payment method -->
+    <div class="info-row">
+      <span class="info-label">Payment method</span>
+      <span class="info-value">PayPal(ali******409@gmail.com)</span>
+    </div>
+
+    <!-- Service fee -->
+    <div class="info-row">
+      <span class="info-label">Service fee</span>
+      <span class="info-value">0.09 USD</span>
+    </div>
+
+    <!-- Estimated you receive -->
+    <div class="info-row">
+      <span class="info-label">Estimated amount you receive</span>
+      <span class="info-value" id="withdrawAmountDisplay">USD0.00</span>
+    </div>
+
+    <!-- Withdrawal time -->
+    <div class="info-row">
+      <span class="info-label">Withdrawal time</span>
+      <span class="info-value" id="withdrawTimeDisplay"></span>
+    </div>
+
+    <!-- Arrival time -->
+    <div class="info-row">
+      <span class="info-label">Arrival time</span>
+      <span class="info-value">within 24 hr</span>
+    </div>
+
+    <!-- Transaction ID -->
+    <div class="info-row" style="align-items:flex-start;">
+      <span class="info-label">Transaction ID</span>
+      <span class="info-value" id="transactionIdDisplay">
+        10000037466854926959201032‑S
+        <button class="copy-btn"><i class="fas fa-copy"></i></button>
+      </span>
     </div>
   </div>
 
-  <!-- Retrieve and display username & passed amount -->
   <script>
-    // Username
+    // Populate amount
+    const storedAmt = localStorage.getItem('withdrawAmount');
+    if (storedAmt !== null) {
+      document
+        .getElementById('withdrawAmountDisplay')
+        .textContent = `+USD${parseFloat(storedAmt).toFixed(2)}`;
+      localStorage.removeItem('withdrawAmount');
+    }
     const storedUser = localStorage.getItem('username');
     if (storedUser) {
       document.getElementById('usernameDisplay').textContent = storedUser;
       localStorage.removeItem('username');
     }
-    // Withdrawal Amount
-    const stored = localStorage.getItem('withdrawAmount');
-    if (stored !== null) {
-      const amt = parseFloat(stored).toFixed(2);
-      document.getElementById('withdrawAmountDisplay').textContent = `+USD${amt}`;
-      localStorage.removeItem('withdrawAmount');
-    }
-      // Withdrawal Time — show the current date & time in M/D/YYYY h:mm:ss AM/PM
-      const now = new Date();
-    const formatted = now.toLocaleString('en-US', {
-      month:   'numeric',
-      day:     'numeric',
-      year:    'numeric',
-      hour:    'numeric',
-      minute:  'numeric',
-      second:  'numeric',
-      hour12:  true
+
+    // Populate time
+    const now = new Date();
+    document.getElementById('withdrawTimeDisplay').textContent = 
+      now.toLocaleString('en-US', {
+        month:  '2-digit',
+        day:    '2-digit',
+        year:   'numeric',
+        hour:   '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+
+    // (Optionally) copy transaction ID to clipboard
+    document.querySelector('.copy-btn').addEventListener('click', () => {
+      const idText = document.getElementById('transactionIdDisplay').innerText.trim();
+      navigator.clipboard.writeText(idText);
+      alert('Transaction ID copied!');
     });
-    document.getElementById('withdrawTimeDisplay').textContent = formatted;
   </script>
 </body>
 </html>

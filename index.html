@@ -12,25 +12,10 @@
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #000; overflow-x: hidden; }
 
     /* Wrapper to center on larger screens */
-    .wrapper {
-      max-width: 420px;
-      margin: 0 auto;
-      background: #fff;
-      min-height: 100vh;
-      position: relative;
-      padding-bottom: 60px; /* footer height */
-    }
+    .wrapper { max-width: 420px; margin: 0 auto; background: #fff; min-height: 100vh; position: relative; padding-bottom: 60px; }
 
     /* Sticky header */
-    .profile-header {
-      position: sticky;
-      top: 0;
-      background: #fff;
-      z-index: 100;
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-    }
+    .profile-header { position: sticky; top: 0; background: #fff; z-index: 100; padding: 12px; text-align: center; border-bottom: 1px solid #eee; }
     .profile-header h1 { font-size: 18px; display: inline-block; vertical-align: middle; font-weight: 600; }
     .profile-header .dot { display: inline-block; width: 8px; height: 8px; background: #f00; border-radius: 50%; margin-left: 4px; vertical-align: middle; }
     .profile-header .icons { position: absolute; right: 12px; top: 12px; font-size: 18px; }
@@ -40,38 +25,9 @@
     .content { padding: 0 12px; }
 
     /* Avatar & name */
-    .avatar-wrapper {
-      position: relative;
-      margin-top: 12px;
-      text-align: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #eee;
-    }
-    .avatar-wrapper .avatar {
-      width: 85px;
-      height: 85px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #fff;
-    }
-    /* Story add icon: centered below avatar */
-    .avatar-wrapper .add {
-      position: absolute;
-      bottom: 75px;
-      left: 58%;
-      transform: translateX(-50%);
-      background: #00bfff;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 16px;
-      border: 2px solid #fff;
-      cursor: pointer;
-    }
+    .avatar-wrapper { position: relative; margin-top: 12px; text-align: center; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+    .avatar-wrapper .avatar { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
+    .avatar-wrapper .add { position: absolute; bottom: 75px; left: 58%; transform: translateX(-50%); background: #00bfff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; border: 2px solid #fff; cursor: pointer; }
     .avatar-wrapper .username { margin-top: 12px; font-size: 16px; font-weight: 600; color: #000; }
     .avatar-wrapper small { display: block; font-size: 14px; color: #666; margin-top: 2px; }
     .avatar-wrapper .subtitle { font-size: 12px; color: #666; margin-top: 4px; }
@@ -82,25 +38,25 @@
     .stats .item .num { font-weight: bold; font-size: 16px; color: #000; }
     .stats .item .label { font-size: 12px; color: #666; margin-top: 2px; }
 
-   /* actions buttons  */
+    /* Actions buttons  */
     .actions { display: flex; justify-content: center; gap: 6px; padding: 12px 0; }
-    .actions button { flex: 1; margin: 0; padding: 10px 0; border: none; border-radius: 6px; background: #f2f2f2; font-size: 14px; cursor: pointer;  }
-    .actions .add-friend { position: relative; width: 40px;  }
-     .badge { position: absolute; top: 4px; right: 37px; background:#ff385c; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .actions button { flex: 1; padding: 10px 0; border: none; border-radius: 6px; background: #f2f2f2; font-size: 14px; cursor: pointer; }
+    .actions .add-friend { position: relative; width: 40px; }
+    .badge { position: absolute; top: 4px; right: 8px; background: #ff385c; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
     /* Tab menu */
     .menu-tabs { display: flex; justify-content: space-around; padding: 10px 0; font-size: 20px; color: #666; border-bottom: 1px solid #eee; }
     .menu-tabs i { cursor: pointer; }
 
     /* Videos carousel */
-    .videos { display: flex;  padding: 6px 0; }
-    .videos video { width: 130px; height: 185px; object-fit: cover; margin-right: 6px;  flex-shrink: 0; }
+    .videos { display: flex; padding: 6px 0; }
+    .videos video { width: 130px; height: 185px; object-fit: cover; margin-right: 6px; flex-shrink: 0; }
 
     /* Sticky footer nav */
     .footer-nav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 6px 0; border-top: 1px solid #eee; background: #fff; font-size: 12px; z-index: 100; }
     .footer-nav .nav-item { text-align: center; color: #666; flex: 1; cursor: pointer; }
     .footer-nav .nav-item i { font-size: 20px; display: block; }
-    .footer-nav .nav-item img { width: 45px; height: 32px; margin-left: -5px; }
+    .footer-nav .nav-item img { width: 45px; height: 32px; }
 
     /* Popup menu overlay */
     .popup-menu { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top-left-radius: 16px; border-top-right-radius: 16px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 16px; display: none; z-index: 200; }
@@ -110,11 +66,15 @@
     .popup-menu li:hover { background: #f9f9f9; }
     .popup-menu .balance { margin-left: auto; font-weight: bold; color: #555; }
 
-    /* action 1 */
+    /* Action 1 */
     .action1 { padding: 12px 0; text-align: center; font-size: 14px; color: #666; }
-    .action1 .subtitle { font-size: 14px; color: #111111; margin-top: 4px; font-weight: 600;}
-    .action1 .paragraph{ margin-top: 5px;}
-    
+    .action1 .subtitle { font-size: 14px; color: #111; margin-top: 4px; font-weight: 600; }
+    .action1 .paragraph { margin-top: 5px; }
+
+    /* Loading screen overlay */
+    .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); display: none; align-items: center; justify-content: center; z-index: 300; }
+    .loading-screen .loader { border: 8px solid #f3f3f3; border-top: 8px solid #3498db; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -127,12 +87,16 @@
       </div>
     </header>
 
+    <!-- Loading overlay -->
+    <div id="loadingScreen" class="loading-screen">
+      <div class="loader"></div>
+    </div>
+
     <div class="content">
       <div class="avatar-wrapper">
         <img src="alisekh.jpg" alt="Avatar" class="avatar">
         <div class="add"><i class="fas fa-plus"></i></div>
         <div class="username">@princedubai029</div>
-        
       </div>
 
       <div class="stats">
@@ -150,8 +114,8 @@
       <div class="action1">
         <div class="subtitle">Back to Main Id (@aliseikh20)</div>
         <div class="paragraph">
-          <p >                                  
-            <i class="fas fa-user-plus " style="color: #ff385c;"></i> <strong>Tik Tok Studio</strong> | <img src="star1.png" alt="TikTok" style="width: 20px; height: 20px; vertical-align: middle;"></i> <strong> Subscription</strong> 
+          <p>
+            <i class="fas fa-user-plus" style="color: #ff385c;"></i> <strong>Tik Tok Studio</strong> | <img src="star1.png" alt="TikTok" style="width: 20px; height: 20px; vertical-align: middle;"><strong> Subscription</strong>
           </p>
         </div>
       </div>
@@ -194,6 +158,7 @@
     const menuToggle = document.getElementById('menuToggle');
     const popupMenu = document.getElementById('popupMenu');
     const footerNav = document.getElementById('footerNav');
+    const loadingScreen = document.getElementById('loadingScreen');
 
     menuToggle.addEventListener('click', e => {
       e.stopPropagation();
@@ -210,7 +175,12 @@
     });
 
     function goToStudio() { alert('Navigating to TikTok Studio...'); }
-    function goToBalance() { window.location.href = 'balance.html'; }
+    function goToBalance() {
+      popupMenu.style.display = 'none';
+      footerNav.style.display = 'flex';
+      loadingScreen.style.display = 'flex';
+      setTimeout(() => { window.location.href = 'balance.html'; }, 1000);
+    }
     function goToMusic() { alert('Opening My Music...'); }
     function goToQRCode() { alert('Displaying QR Code...'); }
     function goToSettings() { alert('Opening Settings & privacy...'); }

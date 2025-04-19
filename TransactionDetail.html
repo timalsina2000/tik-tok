@@ -81,8 +81,13 @@
       </div>
       <div class="divider"></div>
       <div class="info-row">
-        <span class="info-label">Date and time</span>
-        <span class="info-value">4/5/2025 1:27:34 AM</span>
+        <span class="info-label">Withdrawal time</span>
+        <span class="info-value" id="withdrawTimeDisplay"></span>
+      </div>
+      <div class="divider"></div>
+      <div class="info-row">
+        <span class="info-label">Arival time</span>
+        <span class="info-value" > within 24 hr</span>
       </div>
       <div class="divider"></div>
       <div class="info-row" style="align-items:center;">
@@ -118,6 +123,18 @@
       document.getElementById('withdrawAmountDisplay').textContent = `+USD${amt}`;
       localStorage.removeItem('withdrawAmount');
     }
+      // Withdrawal Time — show the current date & time in M/D/YYYY h:mm:ss AM/PM
+      const now = new Date();
+    const formatted = now.toLocaleString('en-US', {
+      month:   'numeric',
+      day:     'numeric',
+      year:    'numeric',
+      hour:    'numeric',
+      minute:  'numeric',
+      second:  'numeric',
+      hour12:  true
+    });
+    document.getElementById('withdrawTimeDisplay').textContent = formatted;
   </script>
 </body>
 </html>

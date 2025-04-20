@@ -35,10 +35,20 @@
         .transaction-item .amount { font-weight: bold; }
         .transaction-item .amount.positive { color: #080808; }
         .transaction-item .amount.negative { color: #0f0f0f; }
-        .diamonds i { margin-left: 4px; color: #f0b90b; }
-        .black {text-decoration: none;}
-        
-    </style>
+                        .diamonds i {
+                margin-left: 4px;
+                }
+
+                .diamonds .fa-gem {
+                color: #f0b90b;
+                }
+
+                .diamonds .info-icon {
+                color: #111; /* or #000 for pure black */
+                }
+
+                        
+                    </style>
 </head>
 <body>
     <div class="header">
@@ -53,7 +63,7 @@
     </div>
      <!--💎-->
     <div class="diamonds">
-        Accumulated Diamonds: <span> <i class="fas fa-gem"></i> 356985456 <i class=" black bi bi-info-circle"></i></span>
+        Accumulated Diamonds: <span> <i class="fas fa-gem"></i> 356985456 <i class="bi bi-info-circle"></i></span>
     </div>
 
     <div class="rewards">
@@ -77,7 +87,7 @@
         <div class="transaction-date">Apr 2025</div>
         <!-- Existing items -->
         <div class="transaction-item">
-            <div>4/5/2025 01:27:35<br><small>LIVE rewards</small></div>
+            <small>LIVE rewards</small> <br><div>4/5/2025 01:27:35</div>
             <div class="amount positive">+USD14.39</div>
         </div>
         <div class="transaction-item">

@@ -49,14 +49,51 @@
     .terms a { color: #888; text-decoration: underline; }
 
     /* Loading Screen Overlay */
-    .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; }
-    .loading-screen .loader { border: 8px solid #f3f3f3; border-top: 8px solid #3498db; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .loading-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    /* Two‑dot loader */
+    .dot-loader {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transform-origin: center bottom;
+      animation: bounce 0.6s ease-in-out infinite alternate;
+    }
+    .dot1 {
+      background: #ff2d55;   /* pink */
+      animation-delay: 0s;
+    }
+    .dot2 {
+      background: #5ac8fa;   /* cyan */
+      animation-delay: 0.3s;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0) scale(1); }
+      to   { transform: translateY(-8px) scale(1.3); }
+    }
   </style>
 </head>
 <body>
   <!-- Loading Overlay -->
-  <div id="loadingScreen" class="loading-screen"><div class="loader"></div></div>
+  <div id="loadingScreen" class="loading-screen">
+    <div class="dot-loader">
+      <div class="dot dot1"></div>
+      <div class="dot dot2"></div>
+    </div>
+  </div>
 
   <header class="header">
     <a href="liveRewards.html"><i class="fas fa-arrow-left back"></i></a>
@@ -136,8 +173,5 @@
       }, 1000);
     });
   </script>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

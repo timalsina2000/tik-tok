@@ -1,151 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIVE Rewards</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LIVE Rewards</title>
+
+  <!-- Font Awesome & Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     rel="stylesheet"
   />
-    <style>
-        body { background-color: #f5f5f5; font-family: Arial, sans-serif; }
-        .header { position: relative; background-color: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
-        .header h1 { font-size: 18px; margin: 0; }
-        .header .back, .header .menu { position: absolute; top: 50%; transform: translateY(-50%); font-size: 20px; color: #111; cursor: pointer; }
-        .header .back { left: 10px; }
-        .header .menu { right: 10px; }
-        .identity-verified { background-color: #fff; padding: 10px; margin: 10px; border-radius: 5px; font-size: 14px; text-align: center; }
-        .diamonds { text-align: center; font-size: 14px; margin: 10px 0; }
-        .diamonds span { color: #0e0e0e; }
-        .rewards { text-align: center; margin: 20px 0; }
-        .rewards h2 { font-size: 36px; font-weight: bold; margin: 0; }
-        .rewards p { font-size: 14px; color: #666; margin: 5px 0; }
-        .actions { display: flex; justify-content: space-between; width: 90%; margin: 0 auto 20px; }
-        .action-btn { flex: 1; padding: 10px; font-size: 16px; border-radius: 5px; color: #fff; border: none; cursor: pointer; }
-        .withdraw-btn { background-color: #ff0050; margin-right: 10px; }
-        .transfer-btn { background-color: #ff0050; }
-        .withdraw-limit { text-align: center; font-size: 14px; margin: 10px 0; }
-        .withdraw-limit a { color: #ff0050; text-decoration: none; }
-        .transactions { margin: 10px; }
-        .transaction-date { font-size: 14px; color: #666; margin: 10px 0; }
-        .transaction-item { background-color: #fff; padding: 10px; border-radius: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; font-size: 14px; }
-        .transaction-item .amount { font-weight: bold; }
-        .transaction-item .amount.positive { color: #080808; }
-        .transaction-item .amount.negative { color: #0f0f0f; }
-                    .diamonds i {
-            margin-left: 4px;
-            }
 
-            .diamonds .fa-gem {
-            color: #f0b90b;
-            }
+  <style>
+    body { background-color: #f5f5f5; font-family: Arial, sans-serif; }
+    .header { position: relative; background-color: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+    .header h1 { font-size: 18px; margin: 0; }
+    .header .back, .header .menu { position: absolute; top: 50%; transform: translateY(-50%); font-size: 20px; color: #111; cursor: pointer; }
+    .header .back { left: 10px; }
+    .header .menu { right: 10px; }
+    .identity-verified { background-color: #fff; padding: 10px; margin: 10px; border-radius: 5px; font-size: 14px; text-align: center; }
+    .diamonds { text-align: center; font-size: 14px; margin: 10px 0; }
+    .diamonds i { margin-left: 4px; }
+    .diamonds .fa-gem { color: #f0b90b; }
+    .diamonds .info-icon { color: #111; }
+    .rewards { text-align: center; margin: 20px 0; }
+    .rewards h2 { font-size: 36px; font-weight: bold; margin: 0; }
+    .rewards p { font-size: 14px; color: #666; margin: 5px 0; }
+    .actions { display: flex; justify-content: space-between; width: 90%; margin: 0 auto 20px; }
+    .action-btn { flex: 1; padding: 10px; font-size: 16px; border-radius: 5px; color: #fff; border: none; cursor: pointer; }
+    .withdraw-btn { background-color: #ff0050; margin-right: 10px; }
+    .transfer-btn { background-color: #ff0050; }
+    .withdraw-limit { text-align: center; font-size: 14px; margin: 10px 0; }
+    .withdraw-limit a { color: #ff0050; text-decoration: none; }
+    .transactions { margin: 10px; }
+    .transaction-date { font-size: 14px; color: #666; margin: 10px 0; }
+    .transaction-item { background-color: #fff; padding: 10px; border-radius: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; font-size: 14px; }
+    .transaction-item .amount { font-weight: bold; }
+    .transaction-item .amount.positive { color: #080808; }
+    .transaction-item .amount.negative { color: #0f0f0f; }
 
-            .diamonds .info-icon {
-            color: #111; /* or #000 for pure black */
-            }
-
-                    
-                </style>
+    /* Loading Overlay */
+    .loading-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    /* Two‑dot loader */
+    .dot-loader {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transform-origin: center bottom;
+      animation: bounce 0.6s ease-in-out infinite alternate;
+    }
+    .dot1 {
+      background: #ff2d55;
+      animation-delay: 0s;
+    }
+    .dot2 {
+      background: #5ac8fa;
+      animation-delay: 0.3s;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0) scale(1); }
+      to   { transform: translateY(-8px) scale(1.3); }
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <a href="balance.html"><i class="fas fa-arrow-left back"></i></a>
-        <h1>LIVE rewards</h1>
-        <i class="fas fa-ellipsis-h menu"></i>
+  <!-- Loading Overlay -->
+  <div id="loadingScreen" class="loading-screen">
+    <div class="dot-loader">
+      <div class="dot dot1"></div>
+      <div class="dot dot2"></div>
     </div>
+  </div>
 
-    <div class="identity-verified"> 
-        <strong>Identity verified</strong><br>
-        Your identity is verified. You can continue with transactions.
+  <div class="header">
+    <a href="balance.html"><i class="fas fa-arrow-left back"></i></a>
+    <h1>LIVE rewards</h1>
+    <i class="fas fa-ellipsis-h menu"></i>
+  </div>
+
+  <div class="identity-verified">
+    <strong>Identity verified</strong><br>
+    Your identity is verified. You can continue with transactions.
+  </div>
+
+  <div class="diamonds">
+    Accumulated Diamonds:
+    <span><i class="fas fa-gem"></i> 356985456 <i class="bi bi-info-circle info-icon"></i></span>
+  </div>
+
+  <div class="rewards">
+    <h2>USD118975767</h2>
+    <p>≈ CHF 110234.77</p>
+  </div>
+
+  <div class="actions">
+    <button id="withdrawBtn" class="action-btn withdraw-btn">Withdraw</button>
+    <button id="transferBtn" class="action-btn transfer-btn">Transfer</button>
+  </div>
+
+  <div class="withdraw-limit">
+    Daily withdraw limit (Remain/Total)<br>
+    $2500/$2500<br>
+    <a href="#">How to increase withdraw limit?</a>
+  </div>
+
+  <div class="transactions" id="transactionsList">
+    <div class="transaction-date">Apr 2025</div>
+    <!-- existing transactions… -->
+    <div class="transaction-item">
+        <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
+        <div class="amount positive">+USD14.39</div>
     </div>
-     <!--💎-->
-    <div class="diamonds">
-        Accumulated Diamonds: <span> <i class="fas fa-gem"></i> 356985456 <i class="bi bi-info-circle"></i></span>
+    <div class="transaction-item">
+        <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
+        <div class="amount negative">-USD25.23</div>
     </div>
-
-    <div class="rewards">
-        <h2>USD118975767</h2>
-        <p>≈ CHF 110234.77</p>
+    <div class="transaction-item">
+        <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
+        <div class="amount positive">+USD10.68</div>
     </div>
-
-    <div class="actions">
-        <button id="withdrawBtn" class="action-btn withdraw-btn">Withdraw</button>
-        <button id="transferBtn" class="action-btn transfer-btn">Transfer</button>
+    <div class="transaction-item">
+        <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
+        <div class="amount positive">+USD15.39</div>
     </div>
-
-    <div class="withdraw-limit">
-        Daily withdraw limit (Remain/Total)<br>
-        $2500/$2500<br>
-        <a href="#">How to increase withdraw limit?</a>
+    <div class="transaction-item">
+        <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
+        <div class="amount negative">-USD25.23</div>
     </div>
-
-    <!-- Transactions list -->
-    <div class="transactions" id="transactionsList">
-        <div class="transaction-date">Apr 2025</div>
-        <!-- Existing items -->
-        <div class="transaction-item">
-            <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
-            <div class="amount positive">+USD14.39</div>
-        </div>
-        <div class="transaction-item">
-            <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
-            <div class="amount negative">-USD25.23</div>
-        </div>
-        <div class="transaction-item">
-            <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
-            <div class="amount positive">+USD10.68</div>
-        </div>
-        <div class="transaction-item">
-            <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
-            <div class="amount positive">+USD15.39</div>
-        </div>
-        <div class="transaction-item">
-            <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
-            <div class="amount negative">-USD25.23</div>
-        </div>
-        <div class="transaction-item">
-            <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
-            <div class="amount positive">+USD10.68</div>
-        </div>
-        <div class="transaction-item">
-            <div><small>LIVE rewards</small><br>4/3/2025 00:46:42</div>
-            <div class="amount positive">+USD6.77</div>
-        </div>
-        <div class="transaction-item">
-            <div><small>LIVE rewards</small><br>4/3/2025 00:22:15</div>
-            <div class="amount positive">+USD7.66</div>
-        </div>
-        
+    <div class="transaction-item">
+        <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
+        <div class="amount positive">+USD10.68</div>
     </div>
+    <div class="transaction-item">
+        <div><small>LIVE rewards</small><br>4/3/2025 00:46:42</div>
+        <div class="amount positive">+USD6.77</div>
+    </div>
+    <div class="transaction-item">
+        <div><small>LIVE rewards</small><br>4/3/2025 00:22:15</div>
+        <div class="amount positive">+USD7.66</div>
+    </div>
+  </div>
 
-    <script>
-        // Navigation
-        document.getElementById("withdrawBtn").addEventListener("click", () => location.href = "withdraw.html");
-        document.getElementById("transferBtn").addEventListener("click", () => location.href = "withdraw.html");
+  <script>
+    const loadingScreen = document.getElementById('loadingScreen');
+    const withdrawBtn   = document.getElementById('withdrawBtn');
+    const transferBtn   = document.getElementById('transferBtn');
 
-        // Insert new transaction from localStorage
-        const storedAmt = localStorage.getItem('withdrawAmount');
-        if (storedAmt !== null) {
-            const transactionsList = document.getElementById('transactionsList');
-            const now = new Date();
-            const pad = num => num.toString().padStart(2, '0');
-            const dateStr = `${now.getMonth()+1}/${now.getDate()}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-            const item = document.createElement('div');
-            item.className = 'transaction-item';
-            item.innerHTML = `
-                <div>${dateStr}<br><small>LIVE rewards withdrawal to PayPal</small></div>
-                <div class="amount negative">-USD${parseFloat(storedAmt).toFixed(2)}</div>
-            `;
-            // Insert after the date header
-            const header = transactionsList.querySelector('.transaction-date');
-            transactionsList.insertBefore(item, header.nextSibling);
-            localStorage.removeItem('withdrawAmount');
-        }
-    </script>
+    // show loader then navigate
+    function goWithLoader(url) {
+      loadingScreen.style.display = 'flex';
+      setTimeout(() => location.href = url, 1000);
+    }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    withdrawBtn.addEventListener('click', () => goWithLoader('withdraw.html'));
+    transferBtn.addEventListener('click', () => goWithLoader('withdraw.html'));
+
+    // insert stored transaction (as before)…
+    const storedAmt = localStorage.getItem('withdrawAmount');
+    if (storedAmt !== null) {
+      const transactionsList = document.getElementById('transactionsList');
+      const now = new Date();
+      const pad = n => n.toString().padStart(2,'0');
+      const dateStr = `${now.getMonth()+1}/${now.getDate()}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      const item = document.createElement('div');
+      item.className = 'transaction-item';
+      item.innerHTML = `
+        <div>${dateStr}<br><small>LIVE rewards withdrawal to PayPal</small></div>
+        <div class="amount negative">-USD${parseFloat(storedAmt).toFixed(2)}</div>
+      `;
+      const header = transactionsList.querySelector('.transaction-date');
+      transactionsList.insertBefore(item, header.nextSibling);
+      localStorage.removeItem('withdrawAmount');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

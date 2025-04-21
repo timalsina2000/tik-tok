@@ -41,7 +41,7 @@
     .withdraw-limit a { color: #ff0050; text-decoration: none; }
     .transactions { margin: 10px; }
     .transaction-date { font-size: 14px; color: #666; margin: 10px 0; }
-    .transaction-item { background-color: #fff; padding: 10px; border-radius: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; font-size: 14px; }
+    .transaction-item { background-color: #fff; padding: 10px; border-radius: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; font-size: 14px; cursor: pointer; }
     .transaction-item .amount { font-weight: bold; }
     .transaction-item .amount.positive { color: #080808; }
     .transaction-item .amount.negative { color: #0f0f0f; }
@@ -58,30 +58,11 @@
       z-index: 1000;
     }
     /* Two‑dot loader */
-    .dot-loader {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      transform-origin: center bottom;
-      animation: bounce 0.6s ease-in-out infinite alternate;
-    }
-    .dot1 {
-      background: #ff2d55;
-      animation-delay: 0s;
-    }
-    .dot2 {
-      background: #5ac8fa;
-      animation-delay: 0.3s;
-    }
-    @keyframes bounce {
-      from { transform: translateY(0) scale(1); }
-      to   { transform: translateY(-8px) scale(1.3); }
-    }
+    .dot-loader { display: flex; gap: 8px; align-items: center; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; transform-origin: center bottom; animation: bounce 0.6s ease-in-out infinite alternate; }
+    .dot1 { background: #ff2d55; animation-delay: 0s; }
+    .dot2 { background: #5ac8fa; animation-delay: 0.3s; }
+    @keyframes bounce { from { transform: translateY(0) scale(1); } to { transform: translateY(-8px) scale(1.3); } }
   </style>
 </head>
 <body>
@@ -127,39 +108,39 @@
 
   <div class="transactions" id="transactionsList">
     <div class="transaction-date">Apr 2025</div>
-    <!-- existing transactions… -->
+    <!-- existing static transactions… -->
     <div class="transaction-item">
-        <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
-        <div class="amount positive">+USD14.39</div>
-    </div>
-    <div class="transaction-item">
-        <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
-        <div class="amount negative">-USD25.23</div>
-    </div>
-    <div class="transaction-item">
-        <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
-        <div class="amount positive">+USD10.68</div>
-    </div>
-    <div class="transaction-item">
-        <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
-        <div class="amount positive">+USD15.39</div>
-    </div>
-    <div class="transaction-item">
-        <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
-        <div class="amount negative">-USD25.23</div>
-    </div>
-    <div class="transaction-item">
-        <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
-        <div class="amount positive">+USD10.68</div>
-    </div>
-    <div class="transaction-item">
-        <div><small>LIVE rewards</small><br>4/3/2025 00:46:42</div>
-        <div class="amount positive">+USD6.77</div>
-    </div>
-    <div class="transaction-item">
-        <div><small>LIVE rewards</small><br>4/3/2025 00:22:15</div>
-        <div class="amount positive">+USD7.66</div>
-    </div>
+      <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
+      <div class="amount positive">+USD14.39</div>
+  </div>
+  <div class="transaction-item">
+      <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
+      <div class="amount negative">-USD25.23</div>
+  </div>
+  <div class="transaction-item">
+      <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
+      <div class="amount positive">+USD10.68</div>
+  </div>
+  <div class="transaction-item">
+      <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
+      <div class="amount positive">+USD15.39</div>
+  </div>
+  <div class="transaction-item">
+      <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
+      <div class="amount negative">-USD25.23</div>
+  </div>
+  <div class="transaction-item">
+      <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
+      <div class="amount positive">+USD10.68</div>
+  </div>
+  <div class="transaction-item">
+      <div><small>LIVE rewards</small><br>4/3/2025 00:46:42</div>
+      <div class="amount positive">+USD6.77</div>
+  </div>
+  <div class="transaction-item">
+      <div><small>LIVE rewards</small><br>4/3/2025 00:22:15</div>
+      <div class="amount positive">+USD7.66</div>
+  </div>
   </div>
 
   <script>
@@ -167,28 +148,34 @@
     const withdrawBtn   = document.getElementById('withdrawBtn');
     const transferBtn   = document.getElementById('transferBtn');
 
-    // show loader then navigate
+    // navigate with loader
     function goWithLoader(url) {
       loadingScreen.style.display = 'flex';
       setTimeout(() => location.href = url, 1000);
     }
-
     withdrawBtn.addEventListener('click', () => goWithLoader('withdraw.html'));
     transferBtn.addEventListener('click', () => goWithLoader('withdraw.html'));
 
-    // insert stored transaction (as before)…
+    // insert stored transaction at top
     const storedAmt = localStorage.getItem('withdrawAmount');
     if (storedAmt !== null) {
       const transactionsList = document.getElementById('transactionsList');
       const now = new Date();
       const pad = n => n.toString().padStart(2,'0');
       const dateStr = `${now.getMonth()+1}/${now.getDate()}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
       const item = document.createElement('div');
       item.className = 'transaction-item';
       item.innerHTML = `
-        <div>${dateStr}<br><small>LIVE rewards withdrawal to PayPal</small></div>
+        <div>
+          <small>LIVE rewards withdrawal to PayPal</small><br>
+          ${dateStr}
+        </div>
         <div class="amount negative">-USD${parseFloat(storedAmt).toFixed(2)}</div>
       `;
+      // add click to go to details
+      item.addEventListener('click', () => goWithLoader('TransactionDetail.html'));
+
       const header = transactionsList.querySelector('.transaction-date');
       transactionsList.insertBefore(item, header.nextSibling);
       localStorage.removeItem('withdrawAmount');

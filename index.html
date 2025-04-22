@@ -26,7 +26,7 @@
 
     /* Avatar & name */
     .avatar-wrapper { position: relative; margin-top: 12px; text-align: center; padding-bottom: 12px;}
-    .avatar-wrapper .avatar { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
+    .avatar-wrapper .avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
     .avatar-wrapper .add { position: absolute; bottom: 75px; left: 58%; transform: translateX(-50%); background: #00bfff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; border: 2px solid #fff; cursor: pointer; }
     .avatar-wrapper .username { margin-top: 12px; font-size: 16px; font-weight: 600; color: #000; }
     .avatar-wrapper small { display: block; font-size: 14px; color: #666; margin-top: 2px; }
@@ -40,9 +40,9 @@
 
     /* Actions buttons  */
     .actions { display: flex; justify-content: center; gap: 6px; padding: 12px 0; }
-    .actions button { flex: 1; padding: 10px 0; border: none; border-radius: 6px; background: #f2f2f2; font-size: 14px; cursor: pointer; }
+    .actions button { width: 120px; padding: 10px 0; border: none; border-radius: 6px; background: #f2f2f2; font-size: 14px; cursor: pointer; }
     .actions .add-friend { position: relative; width: 40px; }
-    .badge { position: absolute; top: 5px; right: 35px; background: #ff385c; color: #fff; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .badge { position: absolute; top: 4px; right: 5px; background: #ff385c; color: #fff; font-size: 5px; width: 10px; height: 10px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
     /* Tab menu */
     .menu-tabs { display: flex; justify-content: space-around; padding: 10px 0; font-size: 20px; color: #666; border-bottom: 1px solid #eee; }
@@ -112,12 +112,26 @@
         transform: translateY(-8px) scale(1.3);
       }
     }
+          .tiktok-badge {
+        display: inline-block;
+        background-color: #20d5ec; /* TikTok blue */
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        width: 14px;
+        height: 14px;
+        line-height: 16px;
+        text-align: center;
+        border-radius: 50%;
+        margin-left: 1px;
+        margin-bottom: -3px;
+      }
   </style>
 </head>
 <body>
   <div class="wrapper">
     <header class="profile-header">
-      <h1>Ali Seikh <i class="fas fa-chevron-down"></i></h1>
+      <h1>HAMAD 🇦🇪 <i class="fas fa-chevron-down"></i></h1>
       <div class="icons">
         <i class="far fa-calendar"></i>
         <i class="fas fa-bars" id="menuToggle"></i>
@@ -134,15 +148,16 @@
 
     <div class="content">
       <div class="avatar-wrapper">
-        <img src="alisekh.jpg" alt="Avatar" class="avatar">
+        <img src="profile2.png" alt="Avatar" class="avatar">
         <div class="add"><i class="fas fa-plus"></i></div>
-        <div class="username">@princedubai029</div>
+        <div class="username">@hmdjs
+           <img src="verification.png" alt="verification" class="tiktok-badge" style="height: 13px; width: 13px;"> </div>
       </div>
 
       <div class="stats">
-        <div class="item"><div class="num">44</div><div class="label">Following</div></div>
-        <div class="item"><div class="num">6.8K</div><div class="label">Followers</div></div>
-        <div class="item"><div class="num">251</div><div class="label">Likes</div></div>
+        <div class="item"><div class="num">204</div><div class="label">Following</div></div>
+        <div class="item"><div class="num">3.9M</div><div class="label">Followers</div></div>
+        <div class="item"><div class="num">62.2M</div><div class="label">Likes</div></div>
       </div>
 
       <div class="actions">

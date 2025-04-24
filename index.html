@@ -50,7 +50,7 @@
 
     /* Videos carousel */
     .videos { display: flex; padding: 6px 0; }
-    .videos video { width: 130px; height: 185px; object-fit: cover; margin-right: 6px; flex-shrink: 0; }
+    .videos img { width: 130px; height: 185px; object-fit: cover; margin-right: 6px; flex-shrink: 0; }
 
     /* Sticky footer nav */
     .footer-nav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 6px 0; border-top: 1px solid #eee; background: #fff; font-size: 12px; z-index: 100; }
@@ -168,7 +168,7 @@
       <div class="actions">
         <button style="text-decoration: none; color: #000;">Edit profile</button>
         <button style="text-decoration: none; color: #000;"  >Share profile</button>
-        <button class="add-friend" style="text-decoration: none;"><i class="fas fa-user-plus" ></i><span class="badge">2</span></button>
+        <button class="add-friend" style="text-decoration: none; color: #000;"><i class="fas fa-user-plus" ></i><span class="badge">2</span></button>
       </div>
 
       <div class="action1">
@@ -188,7 +188,8 @@
       </div>
 
       <nav class="menu-tabs">
-        <i class="fas fa-th-large"></i>
+        <img src="bars.png" alt="bars" style="width: 40px; height: 40px; vertical-align: middle;">
+        <!-- <i class="fas fa-th-large"></i> -->
         <i class="fas fa-lock"></i>
         <i class="fas fa-retweet"></i>
         <i class="fas fa-comment-slash"></i>
@@ -196,9 +197,9 @@
       </nav>
 
       <section class="videos">
-        <video src="video.mp4" controls muted></video>
-        <video src="video.mp4" controls muted></video>
-        <video src="video.mp4" controls muted></video>
+        <img src="video1.png" alt="video" ></img>
+        <img src="video2.png" alt="video"></img>
+        <img src="video3.png" alt="video"></img>
       </section>
     </div>
 

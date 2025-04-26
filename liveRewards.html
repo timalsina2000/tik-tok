@@ -1,3 +1,4 @@
+<!-- liveRewards.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +58,7 @@
       justify-content: center;
       z-index: 1000;
     }
-    /* Two‑dot loader */
+    /* Two-dot loader */
     .dot-loader { display: flex; gap: 8px; align-items: center; }
     .dot { width: 12px; height: 12px; border-radius: 50%; transform-origin: center bottom; animation: bounce 0.6s ease-in-out infinite alternate; }
     .dot1 { background: #ff2d55; animation-delay: 0s; }
@@ -107,79 +108,38 @@
   </div>
 
   <div class="transactions" id="transactionsList">
+    <!-- keep your static header -->
     <div class="transaction-date">Apr 2025</div>
-    <!-- existing static transactions… -->
-    <div class="transaction-item">
-      <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
-      <div class="amount positive">+USD14.39</div>
-  </div>
-  <div class="transaction-item">
-      <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
-      <div class="amount negative">-USD25.23</div>
-  </div>
-  <div class="transaction-item">
-      <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
-      <div class="amount positive">+USD10.68</div>
-  </div>
-  <div class="transaction-item">
-      <div>  <small>LIVE rewards</small> <br>4/5/2025 01:27:35</div>
-      <div class="amount positive">+USD15.39</div>
-  </div>
-  <div class="transaction-item">
-      <div> <small>LIVE rewards withdrawal to PayPal</small> <br>4/3/2025 01:37:14</div>
-      <div class="amount negative">-USD25.23</div>
-  </div>
-  <div class="transaction-item">
-      <div><small>LIVE rewards</small><br>4/3/2025 01:35:01</div>
-      <div class="amount positive">+USD10.68</div>
-  </div>
-  <div class="transaction-item">
-      <div><small>LIVE rewards</small><br>4/3/2025 00:46:42</div>
-      <div class="amount positive">+USD6.77</div>
-  </div>
-  <div class="transaction-item">
-      <div><small>LIVE rewards</small><br>4/3/2025 00:22:15</div>
-      <div class="amount positive">+USD7.66</div>
-  </div>
+    <!-- dynamic items will go here -->
   </div>
 
   <script>
-    const loadingScreen = document.getElementById('loadingScreen');
-    const withdrawBtn   = document.getElementById('withdrawBtn');
-    const transferBtn   = document.getElementById('transferBtn');
-
-    // navigate with loader
+    // helper to show loader & navigate
     function goWithLoader(url) {
-      loadingScreen.style.display = 'flex';
-      setTimeout(() => location.href = url, 1000);
+      document.getElementById('loadingScreen').style.display = 'flex';
+      setTimeout(() => location.href = url, 800);
     }
-    withdrawBtn.addEventListener('click', () => goWithLoader('withdraw.html'));
-    transferBtn.addEventListener('click', () => goWithLoader('withdraw.html'));
+    document.getElementById('withdrawBtn').onclick = () => goWithLoader('withdraw.html');
+    document.getElementById('transferBtn').onclick = () => goWithLoader('withdraw.html');
 
-    // insert stored transaction at top
-    const storedAmt = localStorage.getItem('withdrawAmount');
-    if (storedAmt !== null) {
-      const transactionsList = document.getElementById('transactionsList');
-      const now = new Date();
-      const pad = n => n.toString().padStart(2,'0');
-      const dateStr = `${now.getMonth()+1}/${now.getDate()}/${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    // grab stored transactions array (or empty)
+    const txns = JSON.parse(localStorage.getItem('transactions') || '[]');
+    const list = document.getElementById('transactionsList');
 
+    // render newest first
+    txns.slice().reverse().forEach(tx => {
       const item = document.createElement('div');
       item.className = 'transaction-item';
       item.innerHTML = `
         <div>
-          <small>LIVE rewards withdrawal to PayPal</small><br>
-          ${dateStr}
+          <small>LIVE rewards withdrawal to PayPal by <strong>${tx.username}</strong></small><br>
+          ${tx.timestamp}
         </div>
-        <div class="amount negative">-USD${parseFloat(storedAmt).toFixed(2)}</div>
+        <div class="amount negative">-USD${parseFloat(tx.amount).toFixed(2)}</div>
       `;
-      // add click to go to details
-      item.addEventListener('click', () => goWithLoader('TransactionDetail.html'));
-
-      const header = transactionsList.querySelector('.transaction-date');
-      transactionsList.insertBefore(item, header.nextSibling);
-      localStorage.removeItem('withdrawAmount');
-    }
+      item.onclick = () => goWithLoader('TransactionDetail.html');
+      list.appendChild(item);
+    });
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

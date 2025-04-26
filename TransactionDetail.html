@@ -2,11 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Transaction Details</title>
-
-  <!-- FontAwesome for icons -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -14,7 +12,6 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
-
   <style>
     body {
       margin: 0;
@@ -98,21 +95,19 @@
   </style>
 </head>
 <body>
-
   <header class="header">
-    <a href="index.html"><i class="fas fa-arrow-left back"></i></a>
+    <a href="liveRewards.html"><i class="fas fa-arrow-left back"></i></a>
     <div class="title">Transaction Details</div>
     <i class="fas fa-pen edit"></i>
   </header>
 
   <div class="container">
-    <!-- top summary -->
     <div class="top-summary">
       <div class="small-text"><strong> LIVE rewards transfer to Tiktok </strong></div>
       <div class="amount" id="withdrawAmountOriginal">+USD0.00</div>
     </div>
 
-    <!-- Status -->
+    <!-- status, user, fee, etc. -->
     <div class="info-row">
       <span class="info-label">Status</span>
       <span class="info-value">
@@ -124,89 +119,54 @@
       <span class="info-label">Username</span>
       <span class="info-value" id="usernameDisplay"></span>
     </div>
-
-    <!-- Payment method -->
     <div class="info-row">
       <span class="info-label">Payment method</span>
       <span class="info-value">PayPal(ali******409@gmail.com)</span>
     </div>
-
-    <!-- Service fee -->
     <div class="info-row">
       <span class="info-label">Service fee</span>
-      <span class="info-value">0.09 USD</span>
+      <span class="info-value">0.09 USD</span>
     </div>
-
-    <!-- Estimated you receive -->
     <div class="info-row">
       <span class="info-label">Estimated amount you receive</span>
       <span class="info-value" id="estimatedAmountDisplay">USD0.00</span>
     </div>
-
-    <!-- Withdrawal time -->
     <div class="info-row">
       <span class="info-label">Transfer time</span>
       <span class="info-value" id="withdrawTimeDisplay"></span>
     </div>
-
-    <!-- Arrival time -->
     <div class="info-row">
       <span class="info-label">Arrival time</span>
-      <span class="info-value">within 24 hr</span>
+      <span class="info-value">within 24 hr</span>
     </div>
-
-    <!-- Transaction ID -->
     <div class="info-row" style="align-items:flex-start;">
-      <span class="info-label">Transaction ID</span>
+      <span class="info-label">Transaction ID</span>
       <span class="info-value" id="transactionIdDisplay">
-        10000037466854926959201032‑S
+        10000037466854926959201032-S
         <button class="copy-btn"><i class="fas fa-copy"></i></button>
       </span>
     </div>
   </div>
 
   <script>
-    const storedAmt = localStorage.getItem('withdrawAmount');
     const serviceFee = 0.09;
+    const txns = JSON.parse(localStorage.getItem('transactions') || '[]');
+    if (txns.length) {
+      const last = txns[txns.length - 1];
+      const amt  = parseFloat(last.amount);
 
-    if (storedAmt !== null) {
-      const withdrawAmount = parseFloat(storedAmt);
-      
-      // Display the original withdrawal amount
-      document.getElementById('withdrawAmountOriginal').textContent = `+USD${withdrawAmount.toFixed(2)}`;
-
-      // Calculate and display the estimated amount after fee
-      const estimated = withdrawAmount - serviceFee;
-      document.getElementById('estimatedAmountDisplay').textContent = `USD${estimated.toFixed(2)}`;
-
-      
+      document.getElementById('withdrawAmountOriginal').textContent = `+USD${amt.toFixed(2)}`;
+      document.getElementById('usernameDisplay').textContent       = last.username;
+      document.getElementById('estimatedAmountDisplay').textContent = `USD${(amt - serviceFee).toFixed(2)}`;
+      document.getElementById('withdrawTimeDisplay').textContent   = last.timestamp;
     }
 
-    const storedUser = localStorage.getItem('username');
-    if (storedUser) {
-      document.getElementById('usernameDisplay').textContent = storedUser;
-      localStorage.removeItem('username');
-    }
-
-    // Withdrawal time
-    const now = new Date();
-    document.getElementById('withdrawTimeDisplay').textContent =
-      now.toLocaleString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-      });
-
-    // Copy transaction ID
-    document.querySelector('.copy-btn').addEventListener('click', () => {
-      const idText = document.getElementById('transactionIdDisplay').innerText.trim();
-      navigator.clipboard.writeText(idText);
+    // copy button
+    document.querySelector('.copy-btn').onclick = () => {
+      const id = document.getElementById('transactionIdDisplay').innerText.trim();
+      navigator.clipboard.writeText(id);
       alert('Transaction ID copied!');
-    });
+    };
   </script>
 </body>
 </html>

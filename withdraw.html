@@ -5,8 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Withdraw</title>
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
   <style>
     /* Reset & Base */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,7 +65,6 @@
       justify-content: center;
       z-index: 1000;
     }
-    /* Two‑dot loader */
     .dot-loader {
       display: flex;
       gap: 8px;
@@ -88,14 +92,6 @@
   </style>
 </head>
 <body>
-  <!-- Loading Overlay -->
-  <div id="loadingScreen" class="loading-screen">
-    <div class="dot-loader">
-      <div class="dot dot1"></div>
-      <div class="dot dot2"></div>
-    </div>
-  </div>
-
   <header class="header">
     <a href="liveRewards.html"><i class="fas fa-arrow-left back"></i></a>
     <div class="title">Transfer</div>
@@ -103,7 +99,6 @@
   </header>
 
   <div class="container">
-    <!-- Payment Method Card -->
     <div class="card payment-method flex justify-between">
       <div class="flex">
         <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" class="icon" />
@@ -112,67 +107,86 @@
       <a href="#">Manage</a>
     </div>
 
-    <!-- Limit info -->
     <div class="limit">Daily withdrawal limit (Remain/Total) <strong>$2500 / $2500</strong></div>
 
-    <!-- Inputs Card -->
     <div class="card">
       <div class="input-group">
         <label for="username">Username</label>
-        <input id="username" type="text" class="currency-input" placeholder="Enter your username" />
+        <input id="username" type="text" class="currency-input" placeholder="Enter your username"/>
       </div>
       <div class="input-group">
         <label for="amount">Withdrawal amount</label>
-        <input id="amount" type="number" class="currency-input" placeholder="USD" />
+        <input id="amount" type="number" class="currency-input" placeholder="USD"/>
         <div class="subtext">
           Available today: <strong>113973793.39</strong>
           <span style="color:#ff385c; float:right; cursor:pointer;">All</span>
         </div>
       </div>
-      <div class="estimate">Estimated amount you receive<br><strong>-</strong></div>
+      <div class="estimate">
+        Estimated amount you receive<br>
+        <strong id="estimateValue">-</strong>
+      </div>
     </div>
 
-    <!-- Terms -->
     <div class="terms">
       TikTok <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. Payment transactions processed by PIPO. <a href="#">PIPO Privacy Policy</a>.
     </div>
 
-    <!-- Withdraw Button -->
     <button class="btn" id="withdrawBtn" disabled>Transfer</button>
   </div>
 
+  <div id="loadingScreen" class="loading-screen">
+    <div class="dot-loader">
+      <div class="dot dot1"></div>
+      <div class="dot dot2"></div>
+    </div>
+  </div>
+
   <script>
-    const amountInput = document.getElementById('amount');
-    const withdrawBtn = document.getElementById('withdrawBtn');
-    const loadingScreen = document.getElementById('loadingScreen');
+    const usernameEl = document.getElementById('username');
+    const amountEl   = document.getElementById('amount');
+    const estimateEl = document.getElementById('estimateValue');
+    const btn        = document.getElementById('withdrawBtn');
+    const loader     = document.getElementById('loadingScreen');
+    const fee        = 0.09;
 
-    // Enable/disable button
-    amountInput.addEventListener('input', () => {
-      const val = parseFloat(amountInput.value);
-      if (val > 0) {
-        withdrawBtn.disabled = false;
-        withdrawBtn.style.background = '#ff0050';
-        withdrawBtn.style.color = '#fff';
-        withdrawBtn.style.cursor = 'pointer';
+    function refresh() {
+      const u = usernameEl.value.trim();
+      const a = parseFloat(amountEl.value) || 0;
+      if (u && a > 0) {
+        btn.disabled = false;
+        btn.style.background = '#ff0050';
+        btn.style.color = '#fff';
+        btn.style.cursor = 'pointer';
+        estimateEl.textContent = `USD${(a - fee).toFixed(2)}`;
       } else {
-        withdrawBtn.disabled = true;
-        withdrawBtn.style.background = '#eee';
-        withdrawBtn.style.color = '#aaa';
-        withdrawBtn.style.cursor = 'not-allowed';
+        btn.disabled = true;
+        btn.style.background = '#eee';
+        btn.style.color = '#aaa';
+        btn.style.cursor = 'not-allowed';
+        estimateEl.textContent = '-';
       }
-    });
+    }
+    usernameEl.addEventListener('input', refresh);
+    amountEl.addEventListener('input', refresh);
 
-    // Withdraw click: show loader then navigate
-    withdrawBtn.addEventListener('click', () => {
-      const username = document.getElementById('username').value;
-      const amount = parseFloat(amountInput.value) || 0;
-      localStorage.setItem('username', username);
-      localStorage.setItem('withdrawAmount', amount);
-      loadingScreen.style.display = 'flex';
-      setTimeout(() => {
-        window.location.href = 'TransactionDetail.html';
-      }, 1000);
-    });
+    btn.onclick = () => {
+      const username = usernameEl.value.trim();
+      const amount   = parseFloat(amountEl.value);
+      const now      = new Date();
+      const pad      = n => n.toString().padStart(2,'0');
+      const timestamp= `${now.getMonth()+1}/${now.getDate()}/${now.getFullYear()} ` +
+                        `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
+      // append to array in localStorage
+      const txns = JSON.parse(localStorage.getItem('transactions') || '[]');
+      txns.push({ username, amount, timestamp });
+      localStorage.setItem('transactions', JSON.stringify(txns));
+
+      // loader + navigate
+      loader.style.display = 'flex';
+      setTimeout(() => location.href = 'TransactionDetail.html', 800);
+    };
   </script>
 </body>
 </html>

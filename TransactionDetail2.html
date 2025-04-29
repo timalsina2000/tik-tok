@@ -1,0 +1,172 @@
+<!-- TransactionDetail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Transaction Details</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #fff;
+      color: #111;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    .header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    .header .back, .header .edit {
+      position: absolute;
+      font-size: 20px;
+      color: #111;
+      cursor: pointer;
+    }
+    .header .back { left: 16px; }
+    .header .edit { right: 16px; }
+    .header .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .container {
+      padding: 0 16px;
+    }
+
+    .top-summary {
+      text-align: center;
+      padding: 24px 0;
+    }
+    .top-summary .small-text {
+      font-size: 16px;
+      color: #0f0f0f;
+      margin-bottom: 4px;
+    }
+    .top-summary .amount {
+      font-size: 32px;
+      font-weight: 700;
+      color: #111;
+      margin: 8px 0;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      font-size: 15px;
+      color: #555;
+    }
+    .info-label {
+      color: #888;
+    }
+    .info-value {
+      color: #111;
+      display: inline-flex;
+      align-items: center;
+    }
+    .info-value i {
+      margin-right: 6px;
+    }
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #888;
+      margin-left: 8px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="liveRewards.html"><i class="fas fa-arrow-left back"></i></a>
+    <div class="title">Transaction Details</div>
+    <i class="fas fa-pen edit"></i>
+  </header>
+
+  <div class="container">
+    <div class="top-summary">
+      <div class="small-text"><strong> LIVE rewards withdraw to Tiktok </strong></div>
+      <div class="amount" id="withdrawAmountOriginal">+USD0.00</div>
+    </div>
+
+    <!-- status, user, fee, etc. -->
+    <div class="info-row">
+      <span class="info-label">Status</span>
+      <span class="info-value">
+        <i class="fas fa-check-circle" style="color: #34C759;"></i>
+        Transfer complete
+      </span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Username</span>
+      <span class="info-value" id="usernameDisplay"></span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Payment method</span>
+      <span class="info-value">PayPal(ali******409@gmail.com)</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Service fee</span>
+      <span class="info-value">0.09 USD</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Estimated amount you receive</span>
+      <span class="info-value" id="estimatedAmountDisplay">USD0.00</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Withdraw time</span>
+      <span class="info-value" id="withdrawTimeDisplay"></span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Arrival time</span>
+      <span class="info-value">within 24 hr</span>
+    </div>
+    <div class="info-row" style="align-items:flex-start;">
+      <span class="info-label">Transaction ID</span>
+      <span class="info-value" id="transactionIdDisplay">
+        10000037466854926959201032-S
+        <button class="copy-btn"><i class="fas fa-copy"></i></button>
+      </span>
+    </div>
+  </div>
+
+  <script>
+    const serviceFee = 0.09;
+    const txns = JSON.parse(localStorage.getItem('transactions') || '[]');
+    if (txns.length) {
+      const last = txns[txns.length - 1];
+      const amt  = parseFloat(last.amount);
+
+      document.getElementById('withdrawAmountOriginal').textContent = `+USD${amt.toFixed(2)}`;
+      document.getElementById('usernameDisplay').textContent       = last.username;
+      document.getElementById('estimatedAmountDisplay').textContent = `USD${(amt - serviceFee).toFixed(2)}`;
+      document.getElementById('withdrawTimeDisplay').textContent   = last.timestamp;
+    }
+
+    // copy button
+    document.querySelector('.copy-btn').onclick = () => {
+      const id = document.getElementById('transactionIdDisplay').innerText.trim();
+      navigator.clipboard.writeText(id);
+      alert('Transaction ID copied!');
+    };
+  </script>
+</body>
+</html>
